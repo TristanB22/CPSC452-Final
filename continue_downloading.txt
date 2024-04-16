@@ -1,0 +1,1 @@
+wget -c https://nrel-pds-windai.s3.amazonaws.com/aerodynamic_shapes/2D/2k_airfoils/v1.0.0/airfoil_2k_data.h5S

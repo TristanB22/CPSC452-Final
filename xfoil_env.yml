@@ -1,0 +1,4 @@
+name: xfoil_env
+channels:
+  - defaults
+prefix: /home/dhlab/miniconda3/envs/xfoil_env

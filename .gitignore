@@ -1,0 +1,8 @@
+# Add files and folders to ignore
+xfoil6.99_UNIX.tgz
+PACC/
+Example Data/
+backup_example_dat/
+xfoil_MAC.dmg
+airfoil_2k_data.h5
+Xfoil-for-Mac/

@@ -23,7 +23,9 @@ def get_points_from_dat_file(file_path):
 
 	return points
 
-file_list = os.listdir(".")
+
+BASE_DIR = "./Example Data"
+file_list = os.listdir(BASE_DIR)
 
 
 # # go through each of the files and fix them
@@ -31,13 +33,13 @@ for file_path in tqdm.tqdm(file_list):
 
 	try:
 
-		points = get_points_from_dat_file(os.path.join(".", file_path, file_path + "_reformatted.dat"))
+		points = get_points_from_dat_file(os.path.join(BASE_DIR, file_path, file_path + "_reformatted.dat"))
 
 		# print(points)
 		# print(points[-1])
 		points = points + [points[0]]
 
-		with open(os.path.join(".", file_path, file_path + "_reformatted_full_points.dat"), 'w') as new_file:
+		with open(os.path.join(BASE_DIR, file_path, file_path + "_reformatted_full_points.dat"), 'w') as new_file:
 			for x, y in points:
 				new_file.write(f"{x:.6f}\t{y:.6f}\n")
 

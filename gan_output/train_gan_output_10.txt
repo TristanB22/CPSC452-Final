@@ -1,0 +1,24 @@
+0/1000000 | 0.5888 seconds | loss_lift: 0.4223 | loss_drag: 0.0781 | loss_momentum: 0.1426 | d_loss: 0.6858 | g_loss: 0.7139
+
+Max: 6.704108238220215
+Min: -7.613315105438232
+Fake Disc Score: tensor([[0.4904]], device='cuda:0', grad_fn=<SigmoidBackward0>)
+True Disc Score: tensor([0.5015], device='cuda:0', grad_fn=<SigmoidBackward0>)
+
+100/1000000 | 40.8329 seconds | loss_lift: 0.0738 | loss_drag: 0.0059 | loss_momentum: 0.0089 | d_loss: 0.6696 | g_loss: 0.7945
+200/1000000 | 40.5421 seconds | loss_lift: 0.3633 | loss_drag: 0.0010 | loss_momentum: 0.0226 | d_loss: 0.6730 | g_loss: 0.8421
+300/1000000 | 39.1397 seconds | loss_lift: 0.1372 | loss_drag: 0.0086 | loss_momentum: 0.0048 | d_loss: 0.6653 | g_loss: 0.8846
+400/1000000 | 39.3278 seconds | loss_lift: 0.3244 | loss_drag: 0.0315 | loss_momentum: 0.0538 | d_loss: 0.6419 | g_loss: 0.9093
+500/1000000 | 38.5470 seconds | loss_lift: 0.2388 | loss_drag: 0.0068 | loss_momentum: 0.0162 | d_loss: 0.6616 | g_loss: 1.5422
+600/1000000 | 36.4907 seconds | loss_lift: 0.3934 | loss_drag: 0.0323 | loss_momentum: 0.0464 | d_loss: 0.6296 | g_loss: 2.4324
+700/1000000 | 37.5617 seconds | loss_lift: 0.0328 | loss_drag: 0.0153 | loss_momentum: 0.0097 | d_loss: 0.6456 | g_loss: 4.1321
+800/1000000 | 37.3226 seconds | loss_lift: 0.3626 | loss_drag: 0.3338 | loss_momentum: 0.6205 | d_loss: 0.7261 | g_loss: 0.8454
+900/1000000 | 36.7878 seconds | loss_lift: 0.7018 | loss_drag: 0.0311 | loss_momentum: 0.1109 | d_loss: 0.7357 | g_loss: 0.8005
+1000/1000000 | 38.6390 seconds | loss_lift: 0.2112 | loss_drag: 0.0265 | loss_momentum: 0.0610 | d_loss: 0.6739 | g_loss: 0.9741
+
+Max: 1.1993284225463867
+Min: -0.25664031505584717
+Fake Disc Score: tensor([[0.4413]], device='cuda:0', grad_fn=<SigmoidBackward0>)
+True Disc Score: tensor([0.4794], device='cuda:0', grad_fn=<SigmoidBackward0>)
+
+1100/1000000 | 37.7657 seconds | loss_lift: 0.4799 | loss_drag: 0.0256 | loss_momentum: 0.0925 | d_loss: 0.7141 | g_loss: 0.8032

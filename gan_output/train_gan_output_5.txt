@@ -1,0 +1,9 @@
+0/1000000 | 0.5815 seconds | loss_lift: 0.1356 | loss_drag: 0.1553 | loss_momentum: 0.2019 | d_loss: 0.6630 | g_loss: 0.7505
+
+Max: 0.17843122780323029
+Min: -0.336157888174057
+Fake Disc Score: tensor([[0.5125]], device='cuda:0', grad_fn=<SigmoidBackward0>)
+True Disc Score: tensor([0.5286], device='cuda:0', grad_fn=<SigmoidBackward0>)
+
+100/1000000 | 41.4640 seconds | loss_lift: 0.3340 | loss_drag: 0.1393 | loss_momentum: 0.2393 | d_loss: 0.6753 | g_loss: 0.9791
+200/1000000 | 41.4678 seconds | loss_lift: 0.3767 | loss_drag: 0.2284 | loss_momentum: 0.4634 | d_loss: 0.6807 | g_loss: 1.1196

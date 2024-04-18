@@ -1,0 +1,2 @@
+0/1000000 | 0.4427 seconds | loss_lift: 0.3703 | loss_drag: 0.0009 | loss_momentum: 0.0192 | d_loss: 0.5283 | g_loss: 1.3528
+50/1000000 | 19.4247 seconds | loss_lift: 0.8014 | loss_drag: 0.0441 | loss_momentum: 0.1810 | d_loss: 0.7764 | g_loss: 0.7747

@@ -1,0 +1,5 @@
+0/1000000 | 0.6047 seconds | loss_lift: 0.0920 | loss_drag: 0.3168 | loss_momentum: 0.1402 | d_loss: 0.5823 | g_loss: 0.7400
+50/1000000 | 20.6969 seconds | loss_lift: 0.2637 | loss_drag: 0.2501 | loss_momentum: 0.2225 | d_loss: 0.7847 | g_loss: 0.7533
+100/1000000 | 21.0995 seconds | loss_lift: 0.3202 | loss_drag: 0.1612 | loss_momentum: 0.1679 | d_loss: 0.7718 | g_loss: 0.7668
+150/1000000 | 21.2549 seconds | loss_lift: 1.4029 | loss_drag: 0.0485 | loss_momentum: 0.1345 | d_loss: 0.5997 | g_loss: 2.1226
+200/1000000 | 21.1647 seconds | loss_lift: 0.2529 | loss_drag: 0.0452 | loss_momentum: 0.0301 | d_loss: 0.4163 | g_loss: 3.5800

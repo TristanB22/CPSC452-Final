@@ -2,6 +2,7 @@
 xfoil6.99_UNIX.tgz
 PACC/
 Example Data/
+model_checkpoints/
 backup_example_dat/
 xfoil_MAC.dmg
 airfoil_2k_data.h5

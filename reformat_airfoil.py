@@ -69,7 +69,6 @@ def reformat_airfoil_data(file_path, new_points = None, change_file=True, entire
 	min_x = min(points, key=lambda p: p[0])[0]
 	max_x = max(points, key=lambda p: p[0])[0]
 
-	min((index for index in range(len(arrays)) if len(arrays[index]) > 2), key=lambda x: arrays[x][2])
 
 	# split points into upper and lower using y-value comparisons
 	leftmost_point = min(filter(lambda p: p[0] == min_x, points), key=lambda p: p[1])

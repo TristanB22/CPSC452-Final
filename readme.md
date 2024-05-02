@@ -1,4 +1,5 @@
-# 452 Final Project
+# CPSC 452 Final Project
+### *Multi-Discriminator GAN for Airfoil Design Synthesis*
 ##### __Tristan Brigham, Eugene Han, Elder Veliz__
 
 This is the repository for Yale University's CPSC 452 final project. This repository is self-contained and has all of the code necessary to gather the data for, initialize, and train a multi-discriminator gan that is able to generate airfoils with desired attributes. This readme is divided into sections for running the program, data collection, model architecture, model training, network evaluation, and further research. 
@@ -7,10 +8,11 @@ Please note that all code contained below is for a class project and should not 
 
 Author emails for inquiries:
 - [Tristan Brigham](mailto:tristan.brigham@yale.edu)
+- [Eugene Han](mailto:e.han@yale.edu)
 
 ## Running the program
 
-The process to run this program is rather simple. All scripts are provided and ready to be run. You might need to manually inspect the files and change paths where necessary. The steps are as follows:
+The process to run this program is rather simple. All scripts are provided and ready to be run. The steps are as follows:
 
 - Run `pulling_data_files_uiuc.py`
 - Run `fix_example_data.py`
@@ -18,7 +20,7 @@ The process to run this program is rather simple. All scripts are provided and r
 - Run `run_lift_drag_simulations.py`
 - Open `tot_run.ipynb` and run the cells. The final cells can be adjusted to generate more or less examples of airfoils using the trained GAN. The settings should be adjusted in the first few cells to reflect the objectives of the run. 
 
-For the full running of the model, one can either choose to train the GAN from scratch (takes ~ 13 hours) or use one of the pre-trained models. The best pre-trained models can be found in the `./best_gan` folder.
+For the full running of the model, one can either choose to train the GAN from scratch (takes ~ 13 hours) or use one of the pre-trained models. The best pre-trained models can be found in the `./models` folder suffixed by `_best.ckpt`.
 
 ## Data Collection
 
@@ -50,8 +52,6 @@ We found that pretraining the discriminators mentioned above resulted in better 
 Since we do not use Xoil persistently during the training process for the sake of time, we keep the learning rates of the pre-trained discriminators low. There is not an easily-accessed differentiable ground truth that we have during the course of training the GAN, so these networks serve as a proxy for ground truth while also being fine-tuned selectively in between epochs with generated data that is passed to XFoil and evaluated. 
 
 All of the parameters in the generator network and plausibility network that were being optimized over the course of training were wrapped in Adam optimizers and given varying learning rates that we found worked best of the course of several training cycles. The pre-trained discriminators had vanilla SGD optimizers to account for their pre-training and ensure that their lower learning rates were enforced. 
-
-## _Add in attention here_
 
 ## Model Training
 

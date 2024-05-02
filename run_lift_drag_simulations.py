@@ -16,11 +16,6 @@ import pandas as pd
 # import sklearn
 import tqdm
 
-# importing xfoil itself
-# from xfoil import XFoil
-# from xfoil.model import Airfoil
-
-
 # state variables
 MAC_PLATFORM = 1
 LINUX_PLATFORM = 2
@@ -45,12 +40,6 @@ CURR_FILE_DIR = "."
 
 # define the directory that we are working in for the example files
 EXAMPLE_DIR = "Example Data"
-
-# setting the path of the airfoil
-full_data_path = os.path.join(CURR_FILE_DIR, "airfoil_2k_data.h5")
-
-# path to the example data
-example_data_path = os.path.join(CURR_FILE_DIR, EXAMPLE_DIR, "b737a.dat")
 
 # defining the data files that we are gonna use
 output_file = "polar.txt"
@@ -118,21 +107,21 @@ def pass_to_xfoil(command_array):
     return output
 
 
-# define a function to interact with the XFoil package itself
-def xfoil_package_run_command(xfoil_input_commands):
+# # define a function to interact with the XFoil package itself
+# def xfoil_package_run_command(xfoil_input_commands):
 
-    raise NotImplementedError(
-        "Cannot import XFoil into Linux operating environment -- try another"
-    )
+#     raise NotImplementedError(
+#         "Cannot import XFoil into Linux operating environment -- try another"
+#     )
 
 
-# define a function that splits the commands that we pass to it to a format that xfoil can understand
-# all of the commands in XFoil are in a format where there is alphanumeric and then numbers
-def process_input_commands(input_command):
+# # define a function that splits the commands that we pass to it to a format that xfoil can understand
+# # all of the commands in XFoil are in a format where there is alphanumeric and then numbers
+# def process_input_commands(input_command):
 
-    raise NotImplementedError(
-        "Have not implemented a function for processing the XFoil input commands yet."
-    )
+#     raise NotImplementedError(
+#         "Have not implemented a function for processing the XFoil input commands yet."
+#     )
 
 
 # get everything before and including a line with a key word in a python string
@@ -243,13 +232,6 @@ def get_airfoil_information(xfoil_output):
             current_category = category + "_" + material
             properties_dict[current_category] = {}
 
-        # else:
-        #     if line.strip() != '':
-        #         key, value = line.split('=')
-        #         key = key.strip().replace('(x-xc)', 'over_x-xc').replace('(y-yc)', 'over_y-yc')
-        #         value = value.strip()
-        #         properties_dict[current_category][key] = float(value) if 'e' in value or '.' in value else int(value)
-
     # adding the other information that we got at the start to the dictionary
     properties_dict["max_thickness_x"] = max_thickness_x
     properties_dict["max_thickness_val"] = max_thickness_val
@@ -257,11 +239,6 @@ def get_airfoil_information(xfoil_output):
     properties_dict["max_camber_val"] = max_camber_val
 
     return properties_dict
-
-    # except Exception as e:
-
-    #     # print the output
-    #     print(f"Error: \n{e}")
 
 
 def kill_xquartz():
@@ -287,9 +264,9 @@ def kill_xquartz():
 
 
 # define a function that gets the airfoil information for attack angles
-def get_lift_drag_information():
+# def get_lift_drag_information():
 
-    return drag_lift_dict
+#     return drag_lift_dict
 
 
 # getting the points from a file path
@@ -325,6 +302,8 @@ def show_airfoil(point_array=None, file_path=None):
     # if the file path is where we should be pulling from then get it
     if file_path is not None:
         point_array = get_points_from_dat_file(file_path)
+
+    assert point_array is not None
 
     # split the points properly given that we have tuples
     xu, yu, xl, yl = [], [], [], []

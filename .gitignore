@@ -171,7 +171,6 @@ model_checkpoints/
 backup_example_dat/
 xfoil_MAC.dmg
 airfoil_2k_data.h5
-Xfoil-for-Mac/
 generate_loss_graphs.py
 generated_foils/
 raw/

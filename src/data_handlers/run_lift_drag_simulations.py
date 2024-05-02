@@ -11,7 +11,7 @@ from src.simulations import XfoilSimulator
 
 def run_simulations_uiuc_airfoils():
     sim = XfoilSimulator()
-    data_dir = "..\\..\\data"
+    data_dir = os.path.join(os.path.dirname(__file__), "..", "..", "data")
     dir_list = os.listdir(data_dir)
     for subdir in dir_list:
         target_dir = os.path.join(data_dir, subdir)
@@ -21,7 +21,6 @@ def run_simulations_uiuc_airfoils():
 
         # try:
         sim.run_simulation(target_dir, target_file)
-        print(target_file)
         # except Exception as e:
         #     print(e)
         #     continue

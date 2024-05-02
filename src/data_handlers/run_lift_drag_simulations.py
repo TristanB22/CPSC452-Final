@@ -19,11 +19,11 @@ def run_simulations_uiuc_airfoils():
             data_dir, subdir, f"{subdir}_reformatted_full_points.dat"
         )
 
-        # try:
-        sim.run_simulation(target_dir, target_file)
-        # except Exception as e:
-        #     print(e)
-        #     continue
+        try:
+            sim.run_simulation(target_dir, target_file)
+        except Exception as e:
+            print(e)
+            continue
 
 
 if __name__ == "__main__":

@@ -107,23 +107,6 @@ def pass_to_xfoil(command_array):
     return output
 
 
-# # define a function to interact with the XFoil package itself
-# def xfoil_package_run_command(xfoil_input_commands):
-
-#     raise NotImplementedError(
-#         "Cannot import XFoil into Linux operating environment -- try another"
-#     )
-
-
-# # define a function that splits the commands that we pass to it to a format that xfoil can understand
-# # all of the commands in XFoil are in a format where there is alphanumeric and then numbers
-# def process_input_commands(input_command):
-
-#     raise NotImplementedError(
-#         "Have not implemented a function for processing the XFoil input commands yet."
-#     )
-
-
 # get everything before and including a line with a key word in a python string
 def cut_string_at_keyword(text, keyword):
 
@@ -261,12 +244,6 @@ def kill_xquartz():
 
     except subprocess.CalledProcessError:
         print("XQuartz is not running.")
-
-
-# define a function that gets the airfoil information for attack angles
-# def get_lift_drag_information():
-
-#     return drag_lift_dict
 
 
 # getting the points from a file path

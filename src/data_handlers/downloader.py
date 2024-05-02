@@ -96,6 +96,8 @@ class UIUCAirfoilDownloader:
     def __call__(self) -> None:
         dat_links = self.get_file_links()
         self.download_files(dat_links)
+
+        # zip the folder for easy transport + GitHub upload
         shutil.make_archive(
             self.save_folder,
             "zip",

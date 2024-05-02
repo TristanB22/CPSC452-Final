@@ -1,7 +1,6 @@
 # standard library imports
 import math
 import os
-import shutil
 
 # third party imports
 import numpy as np
@@ -12,14 +11,9 @@ import numpy as np
 class AirfoilPreprocessor:
     def __init__(
         self,
-        save_folder: str = os.path.join(
-            os.path.dirname(__file__), "..", "..", "data", "processed"
-        ),
+        save_folder: str = os.path.join(os.path.dirname(__file__), "..", "..", "data"),
     ):
         self.save_folder = save_folder
-        self.raw_folder = os.path.join(
-            os.path.dirname(__file__), "..", "..", "data", "raw"
-        )
 
     def calculate_centroid(self, points):
         x_mean = sum(p[0] for p in points) / len(points)
@@ -95,12 +89,12 @@ class AirfoilPreprocessor:
 
     def reformat_airfoil_data(
         self,
-        filename,
+        subdir,
         new_points=None,
         entire_shuffle=False,
         interpolate=True,
     ):
-        file_path = os.path.join(self.raw_folder, filename)
+        file_path = os.path.join(self.save_folder, subdir, f"{subdir}.dat")
 
         # get the data points
         if new_points is None:
@@ -248,27 +242,25 @@ class AirfoilPreprocessor:
         # save the reformatted data to a new file
         new_file_path = os.path.join(
             self.save_folder,
-            "reformatted",
-            filename.replace(".dat", "_reformatted.dat"),
+            subdir,
+            f"{subdir}_reformatted.dat",
         )
 
         with open(new_file_path, "w") as new_file:
             for x, y in points:
                 new_file.write(f"{x:.6f}\t{y:.6f}\n")
 
-    def fix_for_xfoil(self, filename):
+    def fix_for_xfoil(self, subdir):
         file_path = os.path.join(
             self.save_folder,
-            "reformatted",
-            filename.replace(".dat", "_reformatted.dat"),
+            subdir,
+            f"{subdir}_reformatted.dat",
         )
         points = self.get_points_from_dat_file(file_path)
         points = points + [points[0]]
 
         new_file_path = os.path.join(
-            self.save_folder,
-            "reformatted_full_points",
-            filename.replace("_reformatted.dat", "_reformatted_full_points.dat"),
+            self.save_folder, subdir, f"{subdir}_reformatted_full_points.dat"
         )
 
         with open(new_file_path, "w") as new_file:
@@ -276,14 +268,10 @@ class AirfoilPreprocessor:
                 new_file.write(f"{x:.6f}\t{y:.6f}\n")
 
     def __call__(self):
-        dir_list = os.listdir(self.raw_folder)
-        for filename in dir_list:
-            if filename.endswith(".dat"):
-                self.reformat_airfoil_data(filename)
-                self.fix_for_xfoil(filename)
-
-        # zip the folder for easy transport + GitHub upload
-        shutil.make_archive(self.save_folder, "zip", self.save_folder)
+        dir_list = os.listdir(self.save_folder)
+        for subdir in dir_list:
+            self.reformat_airfoil_data(subdir)
+            self.fix_for_xfoil(subdir)
 
 
 if __name__ == "__main__":

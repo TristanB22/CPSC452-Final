@@ -1,7 +1,6 @@
 # standard library imports
 import os
 import random
-import shutil
 import time
 from typing import List, Union
 
@@ -17,9 +16,7 @@ class UIUCAirfoilDownloader:
     def __init__(
         self,
         use_website: bool = False,
-        save_folder: str = os.path.join(
-            os.path.dirname(__file__), "..", "..", "data", "raw"
-        ),
+        save_folder: str = os.path.join(os.path.dirname(__file__), "..", "..", "data"),
     ):
         self.use_website = use_website
         self.save_folder = save_folder
@@ -77,7 +74,10 @@ class UIUCAirfoilDownloader:
                 time.sleep(1)
 
             filename = url.split("/")[-1]
-            save_path = os.path.join(self.save_folder, filename)
+            subfolder = os.path.join(self.save_folder, filename.replace(".dat", ""))
+            os.makedirs(subfolder, exist_ok=True)
+
+            save_path = os.path.join(subfolder, filename)
 
             # get the data
             response = requests.get(url, stream=True)
@@ -96,13 +96,6 @@ class UIUCAirfoilDownloader:
     def __call__(self) -> None:
         dat_links = self.get_file_links()
         self.download_files(dat_links)
-
-        # zip the folder for easy transport + GitHub upload
-        shutil.make_archive(
-            self.save_folder,
-            "zip",
-            self.save_folder,
-        )
 
 
 if __name__ == "__main__":

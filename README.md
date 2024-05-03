@@ -9,6 +9,7 @@ Please note that all code contained below is for a class project and should not 
 Author emails for inquiries:
 - [Tristan Brigham](mailto:tristan.brigham@yale.edu)
 - [Eugene Han](mailto:e.han@yale.edu)
+- [Elder Veliz](mailto:elder.veliz@yale.edu)
 
 ## Running the program
 

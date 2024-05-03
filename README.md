@@ -72,12 +72,12 @@ We find that the pretrained discriminators do not see much movement in their los
 
 Notice that the training collapses around 20% of the way through the training when the plausibility discriminator perfectly learns what is generated and what is not and overpowers the generator. 
 
-<p align="center" style="font-size:0.7em;">
+<span align="center" style="font-size:0.7em;">
     <img src="./figures/loss_graphs/loss_drag_moving_average.png" alt="loss_drag_moving_average" width="30%" style="margin-right: 10px;"/>
     <img src="./figures/loss_graphs/loss_lift_moving_average.png" alt="loss_lift_moving_average" width="30%" style="margin-right: 10px;"/>
     <img src="./figures/loss_graphs/loss_momentum_moving_average.png" alt="loss_momentum_moving_average" width="30%" /> <br>
     The loss graphs over the course of training for the pretrained discriminators.
-</p>
+</span>
 
 <br>
 

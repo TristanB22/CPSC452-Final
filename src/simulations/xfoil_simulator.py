@@ -32,16 +32,16 @@ class XfoilSimulator:
     UNKNOWN_PLATFORM = 4
     PLATFORM = UNKNOWN_PLATFORM
 
-    VERBOSE = False
-
     def __init__(
         self,
+        verbose,
         reynolds_number=1e6,
         mach_number=0.3,
         s_aot=2.0,
         t_aot=6.0,
         aot_increments=1.0,
     ):
+        self.VERBOSE = verbose
         self.reynolds_number = reynolds_number
         self.mach_number = mach_number
         self.s_aot = s_aot
@@ -171,6 +171,7 @@ class XfoilSimulator:
 
         # split the text by newlines and iterate through the lines
         lines = xfoil_bend_metrics.split("\n")
+        print(xfoil_bend_metrics)
         for line in lines:
 
             # check the value and the key

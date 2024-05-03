@@ -128,9 +128,6 @@ class EarlyStopping:
         elif v_loss > self.b_loss - self.min_delta:
             self.counter += 1
 
-            # if VERBOSE:
-            #     print(f'EarlyStopping counter: {self.counter} out of {self.patience} | {v_loss:.4f}')
-
             if self.counter >= self.patience:
                 self.early_stop = True
 

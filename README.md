@@ -2,9 +2,9 @@
 ### *Multi-Discriminator GAN for Airfoil Design Synthesis*
 ##### __Tristan Brigham, Eugene Han, Elder Veliz__
 
-This is the repository for Yale University's CPSC 452 final project. This repository is self-contained and has all of the code necessary to gather the data for, initialize, and train a multi-discriminator gan that is able to generate airfoils with desired attributes. This readme is divided into sections for running the program, data collection, model architecture, model training, network evaluation, and further research. 
+This is the repository for Yale University's CPSC 452 final project. This repository is self-contained and has all of the code necessary to gather the data for, initialize, and train a multi-discriminator GAN that can generate airfoils with desired attributes. This README is divided into sections for running the program, data collection, model architecture, model training, network evaluation, and further research. 
 
-Please note that all code contained below is for a class project and should not be replicated or copied without the author's permission. It is for educational purposes only, and the authors do not intend for this to be used as the basis for any other scholastic or professional work. Please do not get us or yourself in trouble. 
+Please note that all code contained below is for a class project and should not be replicated or copied without the authors' permission. It is for educational purposes only, and the authors do not intend for this to be used as the basis for any other scholastic or professional work. Please do not get us or yourself in trouble. 
 
 Author emails for inquiries:
 - [Tristan Brigham](mailto:tristan.brigham@yale.edu)
@@ -27,34 +27,34 @@ For the full running of the model, one can either choose to train the GAN from s
 
 ## Data Collection
 
-After evaluating all of the data sources that we included in our original proposal, we found that many of the datasets that we hoped to use had concerning inconsistencies in the way that they handled data and evaluated results. Hence, the data gathering process for this project came in two steps: gathering and generation. 
+After evaluating all of the data sources that we included in our original proposal, we found that many of the datasets that we hoped to use had concerning inconsistencies in the way that they handled data and evaluated results. Hence, the data-gathering process for this project came in two steps: gathering and generation. 
 
-The vast majority of the data that is used for this machine learning model has been gathered from the [UIUC database for airfoil designs](https://m-selig.ae.illinois.edu/ads/coord_database.html). This is a great resource with over a thousand point clouds specifying airfoils that are actually used in industry and proven to be effective. 
+The vast majority of the data that is used for this machine learning model has been gathered from the [UIUC database for airfoil designs](https://m-selig.ae.illinois.edu/ads/coord_database.html). This is a great resource with over a thousand point clouds specifying airfoils that are actually used in industry and have proven to be effective. 
 
-We have provided a script that is able to ping the server that hosts the website (with latency so as not to overload the servers) and get the files for each of the airfoils on the website in `downloader.py`.
+We have provided a script that pings the server that hosts the website (with latency so as not to overload the servers) and gets the files for each of the airfoils on the website in `downloader.py`.
 
 Additionally, we also used the [XFOIL](https://web.mit.edu/drela/Public/web/XFOIL/) program to generate airfoils following the [NACA](https://en.wikipedia.org/wiki/NACA_airfoil) scheme. This scheme uses a series of 4, 6, or more points depending on the version to specify unique airfoil designs. We used XFOIL to generate an exhaustive list of potential designs using these parameters which we saved to the dataset that we ended up using. 
 
 We then cleaned all of the point clouds in the two sources above and standardized the airfoils to have exactly 50 points describing the top edge of the airfoil and exactly 50 points describing the bottom half of the airfoil. The airfoils were also all normalized to have a unit x-distance (chord).
 
-An important thing to note is that the vast majority of the data is generated in a mach 0.3, visc=10e6 environment with XFOIL where the mach number is the velocity of the oncoming airflow and the visc value is the turbulence that exists in the oncoming flow. We did not change these parameters over the course of this experiment, and leave it as an exercise to the reader to try training a neural network that is able to respond to changes in the pressure and velocity of the simulation environment. 
+An important thing to note is that the vast majority of the data is generated in a Mach 0.3, visc=10e6 environment with XFOIL where the Mach number is the velocity of the oncoming airflow and the visc value is the turbulence that exists in the oncoming flow. We did not change these parameters over the course of this experiment, and leave it as an exercise to the reader to try training a neural network that is able to respond to changes in the pressure and velocity of the simulation environment. 
 
 ## Model Architecture
 
-The input to the GAN is a vector of normally distributed noise that can be generated with the `generate_noise()` function which takes the shape that the generator takes as input as one of the arguments concatenated with a vector specifying the intended coefficients that the user would like the outut airfoil to have. The output of the generator is a point cloud that describes an airfoil which has, according to the generator, the required coefficients specified in the input vector. 
+The input to the GAN is a vector of normally distributed noise that can be generated with the `generate_noise()` function which takes the shape that the generator takes as input as one of the arguments concatenated with a vector specifying the intended coefficients that the user would like the output airfoil to have. The output of the generator is a point cloud that describes an airfoil that has, according to the generator, the required coefficients specified in the input vector. 
 
 The discriminator of the GAN contains 4 separate discriminators detailed below:
 
 - _Lift Discriminator_ This discriminator scored the generated airfoil based on how close the lift coefficient of the airfoil described by the point cloud is to the target lift coefficient that the user has asked for. This discriminator was pre-trained on some of the dataset data in order to help with its convergence, but had a lower learning rate than the rest of the model to account for this. 
 - _Momentum Discriminator_ This discriminator scored the generator on how close the momentum coefficient of the generated design was to the target momentum coefficient that we looked for in the model. This discriminator was pre-trained on some of the dataset data in order to help with its convergence, but had a lower learning rate than the rest of the model to account for this. 
 - _Drag Discriminator_ This discriminator scored the generator on how close the drag coefficient of the generated design was to the target drag coefficient. This discriminator was pre-trained on some of the dataset data in order to help with its convergence, but had a lower learning rate than the rest of the model to account for this. 
-- _Plausibility Discriminator_ This discriminator followed the general approach for discriminators in GAN's. It was not pre-trained and had the highest learning rate of all of the discriminators in the model. It's purpose was to attempt to figure out whether a generated design was fake (generated by the generator) or real (from the dataset). 
+- _Plausibility Discriminator_ This discriminator followed the general approach for discriminators in GANs. It was not pre-trained and had the highest learning rate of all of the discriminators in the model. Its purpose was to attempt to figure out whether a generated design was fake (generated by the generator) or real (from the dataset). 
 
 We found that pretraining the discriminators mentioned above resulted in better convergence for the generator. We postulate that this is because the model is better able to learn early on that the coefficients are the most important part of the airfoil and loss (despite the losses already being overweighted in the loss) which is also a result of having a valid (or plausible) design come from the generator function. Effectively, you can't have valid lift coefficients in the eyes of XFOIL without having a valid design, so the plausibility constraint was effectively built into all of the discriminators described above. 
 
-Since we do not use Xoil persistently during the training process for the sake of time, we keep the learning rates of the pre-trained discriminators low. There is not an easily-accessed differentiable ground truth that we have during the course of training the GAN, so these networks serve as a proxy for ground truth while also being fine-tuned selectively in between epochs with generated data that is passed to XFOIL and evaluated. 
+Since we do not use Xoil persistently during the training process for the sake of time, we keep the learning rates of the pre-trained discriminators low. There is not an easily accessed differentiable ground truth that we have during the course of training the GAN, so these networks serve as a proxy for ground truth while also being fine-tuned selectively in between epochs with generated data that is passed to XFOIL and evaluated. 
 
-All of the parameters in the generator network and plausibility network that were being optimized over the course of training were wrapped in Adam optimizers and given varying learning rates that we found worked best of the course of several training cycles. The pre-trained discriminators had vanilla SGD optimizers to account for their pre-training and ensure that their lower learning rates were enforced. 
+All of the parameters in the generator network and plausibility network that were being optimized throughout training were wrapped in Adam optimizers and given varying learning rates that we found worked best over several training cycles. The pre-trained discriminators had vanilla SGD optimizers to account for their pre-training and ensure that their lower learning rates were enforced. 
 
 ## Model Training
 
@@ -67,9 +67,9 @@ The network was trained on NVIDIA GPUs.
 ## Network Evaluation
 
 In evaluating the network, we found that the generator was able to learn the general structure and requirements for valid airfoil designs with relative ease. 
-The first step in evaluation was to inspect the loss graphs for the training process. We are looking for stable losses between the generator and discriminator before either the end of the training process or a collapse in the losses where one network is too good for the other network to learn. The pretrained discriminators with the lower and non-variable learning rates should have slightly decreasing loss over the course of training, but not much given ther low learning rates. 
+The first step in evaluation was to inspect the loss graphs for the training process. We are looking for stable losses between the generator and discriminator before either the end of the training process or a collapse in the losses where one network is too good for the other network to learn. The pre-trained discriminators with the lower and non-variable learning rates should have slightly decreasing loss throughout training, but not much given their low learning rates. 
 
-We find that the pretrained discriminators do not see much movement in their loss over the course of training (which means that it was a good call to pre-train them and keep their learning rates low) while the generator and the discriminator are locked in an adversarial struggle to dupe one another (which is what we want). This stability across the board is a very good indicator that the resulting generator will be tuned effectively. 
+We find that the pre-trained discriminators do not see much movement in their loss during training (which means that it was a good call to pre-train them and keep their learning rates low) while the generator and the discriminator are locked in an adversarial struggle to dupe one another (which is what we want). This stability across the board is a very good indicator that the resulting generator will be tuned effectively. 
 
 Notice that the training collapses around 20% of the way through the training when the plausibility discriminator perfectly learns what is generated and what is not and overpowers the generator. 
 
@@ -77,7 +77,7 @@ Notice that the training collapses around 20% of the way through the training wh
     <img src="./figures/loss_graphs/loss_drag_moving_average.png" alt="loss_drag_moving_average" width="30%" style="margin-right: 10px;"/>
     <img src="./figures/loss_graphs/loss_lift_moving_average.png" alt="loss_lift_moving_average" width="30%" style="margin-right: 10px;"/>
     <img src="./figures/loss_graphs/loss_momentum_moving_average.png" alt="loss_momentum_moving_average" width="30%" /> <br>
-    The loss graphs over the course of training for the pretrained discriminators.
+    The loss graphs over the course of training for the pre-trained discriminators.
 </p>
 
 <br>
@@ -92,7 +92,7 @@ Notice that the training collapses around 20% of the way through the training wh
 
 The second test was to see whether the network is able to generate coherent airfoils or not. Given that we only allow for the airfoils to be parameterized by 100 points even though in reality it would take an infinite amount of points to model a smooth airfoil, we had to apply smoothing to the airfoils using a technique called Bezier curves. 
 
-After applying this and normalizing the airfoils such that the generated airfoils have unit chord once again, we found that the initial results were very promising:
+After applying this and normalizing the airfoils such that the generated airfoils have unit chords once again, we found that the initial results were very promising:
 
 <p align="center">
     <img src="./figures/output_plt_1.png" alt="First Generated Airfoil" style="width: 50%" /> <br>
@@ -122,7 +122,7 @@ The model has a relatively limited domain to pull from given that all simulation
 
 <br>
 
-The following is an example of an airfoil that was generated by the generator function. We gave the generator a target lift coefficient of 0.5 with target drag equal to 0 and target momentum equal to 0 as well. The model was able to generate an airfoil with a lift coefficient of 0.4858 with lift and momentum coefficients almost equal to 0. 
+The following is an example of an airfoil that was generated by the generator function. We gave the generator a target lift coefficient of 0.5 with a target drag equal to 0 and target momentum equal to 0 as well. The model was able to generate an airfoil with a lift coefficient of 0.4858 with lift and momentum coefficients almost equal to 0. 
 
 <p align="center">
     <img src="./figures/5_lift.png" alt="Good Generated Airfoil Output" style="width: 50%" /> <br>
@@ -216,12 +216,12 @@ The following data describes the entire airfoil that has been generated for this
 
 ## Further Research
 
-Given the limited compute and time that we had for this project, we believe that there is a serious amount of unexploited potential left in this project. We propose potential continuations of this projet below:
+Given the limited compute and time that we had for this project, we believe that there is a serious amount of unexploited potential left in this project. We propose potential continuations of this project below:
 
 - _Increase Versatility_: Through the course of this model creation and training, we only operated with three parameters for the airfoils as targets (lift, drag, and momentum coefficients). However, this is only scratching the surface of the ways that one can change an airfoil. Given that this is the case, we see the integration of more parameters and information about the airfoils that we generate as an obvious next step for this project. 
 This could involve actual changes to the structure of the airfoil through more, different parameters such as shape, tensile strength,  and the distribution of internal weight being included or could include changes to the environment through perturbed mach and viscosity values. 
 
-- _Integrate Live Evaluation_: One of the main constraints that we faced through this entire project is that the runtime for the XFOIL program is rather large. It takes a long time to actually compute the CFD calculations for any airfoil. And, even if we were able to, this is a non-differentiable function which does not provide a lot of insight or help to the generator network that is trying to learn the distribution. 
+- _Integrate Live Evaluation_: One of the main constraints that we faced throughout this entire project is that the runtime for the XFOIL program is rather large. It takes a long time to actually compute the CFD calculations for any airfoil. And, even if we were able to, this is a non-differentiable function which does not provide a lot of insight or help to the generator network that is trying to learn the distribution. 
 The differentiable nature of the function approximations that we got through the pretraining of the discriminators allowed the generator to learn how to create airfoils that are more valid according to the parameters given throughout training. If this is able to be replaced with a more robust method for computing the CFD simulations for a generated airfoil with the potential for more precise gradients to move the generator towards being able to create valid airfoils with closer attributes to the targets, this would be very helpful for future iterations of the models. 
 
 - _Go Multidimensional_: As we all know, airfoils alone have limited applicability to the real world. One needs to do eons of design iteration and testing before the planes that we see and fly in are able to fly let alone be manufactured. Therefore, it would not be a stretch to imagine a similar version of this neural network that is able to generate 3-dimensional shapes with attributes that mimic target attributes. Several papers that attempt to do such a thing are included in the PDF version of the report that is included in this repository. 

@@ -1,5 +1,5 @@
 # CPSC 452 Final Project
-### *Multi-Discriminator GAN for Airfoil Design Synthesis*
+### *Multi-Discriminator cGAN for Novel Airfoil Design Synthesis*
 ##### __Tristan Brigham, Eugene Han, Elder Veliz__
 
 This is the repository for Yale University's CPSC 452 final project. This repository is self-contained and has all of the code necessary to gather the data for, initialize, and train a multi-discriminator GAN that can generate airfoils with desired attributes. This README is divided into sections for running the program, data collection, model architecture, model training, network evaluation, and further research. 

@@ -1,5 +1,5 @@
 # CPSC 452 Final Project
-### *Multi-Discriminator GAN for Airfoil Design Synthesis*
+### *Multi-Discriminator cGAN for Novel Airfoil Design Synthesis*
 ##### __Tristan Brigham, Eugene Han, Elder Veliz__
 
 This is the repository for Yale University's CPSC 452 final project. This repository is self-contained and has all of the code necessary to gather the data for, initialize, and train a multi-discriminator GAN that can generate airfoils with desired attributes. This README is divided into sections for running the program, data collection, model architecture, model training, network evaluation, and further research. 
@@ -23,7 +23,7 @@ The process to run this program is rather simple. All scripts are provided and r
     - `run_lift_drag_simulations.py` to run XFOIL simulations
 4. Open `full_run.ipynb` in the `notebooks` folder and run the cells. The final cells can be run as many times as desired to generate more examples of airfoils using the trained GAN and run them through XFOIL. We've included one such example inside `notebooks/demo`.
 
-For the full running of the model, one can either choose to train the GAN from scratch (takes ~ 13 hours) or use one of the pre-trained models. The best pre-trained models can be found in the `models` folder suffixed by `_best.ckpt`.
+For the full running of the model, one can either choose to train the GAN from scratch (takes ~ 20 hours) or use one of the pre-trained models. The best pre-trained models can be found in the `models` folder suffixed by `_best.ckpt`.
 
 ## Data Collection
 
@@ -58,7 +58,7 @@ All of the parameters in the generator network and plausibility network that wer
 
 ## Model Training
 
-To train the model, we set the learning rate of the generator to be the highest (0.001) followed by the learning rate of the plausibility discriminator (0.0001) and the learning rates of the rest of the discriminators (0.00001). An entire model run takes ~13 hours for 100000 epochs. With that being said, we found that the optimal generator network can be found much earlier in the training cycle (around epoch 18000 depending on the learning rate), and that the stability of the training process collapses relatively soon after. The discriminator is consistently able to tell what is real and what is fake with 100% accuracy around epoch 80000. 
+To train the model, we set the learning rate of the generator to be the highest (0.001) followed by the learning rate of the plausibility discriminator (0.0001) and the learning rates of the rest of the discriminators (0.00001). An entire model run takes ~20 hours for 100000 epochs. With that being said, we found that the optimal generator network can be found much earlier in the training cycle (around epoch 18000 depending on the learning rate), and that the stability of the training process collapses relatively soon after. The discriminator is consistently able to tell what is real and what is fake with 100% accuracy around epoch 80000. 
 
 In order to combat the collapse of the steady state of the network training, we do not update the gradients of the discriminator when the loss of the generator network is substantially higher than the discriminator network loss. This continues until the loss values stabilize again. 
 
